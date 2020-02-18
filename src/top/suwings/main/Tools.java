@@ -4,10 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import top.suwings.base.MineCallback;
 
 import java.lang.reflect.Method;
@@ -19,6 +21,7 @@ import java.util.List;
 public class Tools {
 
     public static HashMap<String, Boolean> godPlayerMap = new HashMap<>();
+    private static HashMap<Player, BukkitTask> godPlayerByTick = new HashMap<>();
 
     // 玩家药水效果设置方法
     public static void setPlayerPotionEffect(Player player, int potionTime, PotionEffectType z) {
@@ -46,6 +49,25 @@ public class Tools {
             godPlayerMap.remove(player.getUniqueId().toString());
         }
     }
+
+    public static void setPlayerGodByTick(Player player, int tick) {
+        final String playerUUID = player.getUniqueId().toString();
+        godPlayerMap.put(playerUUID, true);
+        if (godPlayerByTick.get(player) != null) {
+            godPlayerByTick.get(player).cancel();
+            godPlayerByTick.remove(player);
+        }
+        BukkitTask bukkitTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                godPlayerMap.remove(player.getUniqueId().toString());
+                godPlayerByTick.remove(player);
+            }
+        }.runTaskTimer(CenturyStone.centuryStone, 0, tick);
+
+        godPlayerByTick.put(player, bukkitTask);
+    }
+
 
     //比较两个list
     //取出存在menuOneList中，但不存在resourceList中的数据，差异数据放入differentList

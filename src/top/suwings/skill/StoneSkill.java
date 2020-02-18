@@ -131,34 +131,35 @@ public class StoneSkill {
     private void aeraInvincible() {
         double radius = 4;
         final int effectRange = (int) radius;
-        int effectTime = 20;
+        int effectTime = 10;
         final Location location = player.getEyeLocation().clone();
-        final List<Player>[] godPlayerList = new List[]{new ArrayList<>()};
-        List<Player> tmpGodPlayerList = new ArrayList<>();
+        HashMap<Player, Integer> playerHealthMap = new HashMap<>();
+        Collection<Entity> nearEntityInit = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
+        for (Entity entity : nearEntityInit) {
+            if (entity instanceof Player) {
+                Player entityPlayer = (Player) entity;
+                playerHealthMap.put(entityPlayer, (int) player.getHealth());
+            }
+        }
         // 播放声音
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
         // 区域粒子效果
-        Tools.spawnCircleParticle(location, Particle.SLIME, radius, 4 * 20, effectTime, (Object self) -> {
+        Tools.spawnCircleParticle(location, Particle.END_ROD, radius, 10, effectTime, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
                     Player entityPlayer = (Player) entity;
                     entityPlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3 * 20, 1));
-                    // 给与玩家无敌
-                    Tools.setPlayerGod(entityPlayer, true);
-                    tmpGodPlayerList.add(entityPlayer);
+                    // 虽然是假的无敌，但是很厉害的无敌了
+                    player.setHealth(playerHealthMap.get(player));
                     continue;
                 }
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3 * 20, 1));
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3 * 20, 1));
                 }
             }
-            List<Player> diffPlayer = Tools.listCompare(godPlayerList[0], tmpGodPlayerList);
-            for (Player player : diffPlayer) {
-                Tools.setPlayerGod(player, false);
-            }
-            godPlayerList[0] = tmpGodPlayerList;
         });
     }
 
