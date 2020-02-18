@@ -22,6 +22,8 @@ public class StoneSpend {
     public static int PRISMARINE_CRYSTALS = 1;
     // 海晶沙粒
     public static int PRISMARINE_SHARD = 1;
+    // 金锭
+    public static int GOLD_INGOT = 1;
 
     // 不同宝石的冷却时间
     public static int EMERALD_CD_TIME = 35 * 20;
@@ -34,6 +36,7 @@ public class StoneSpend {
     public static int QUARTZ_CD_TIME = 4 * 20;
     public static int PRISMARINE_CRYSTALS_CD_TIME = 80 * 20;
     public static int PRISMARINE_SHARD_CD_TIME = 30 * 20;
+    public static int GOLD_INGOT_CD_TIME = 30 * 20;
 
     // 不同宝石的耐久度
     public static int EMERALD_DURABLE = 3;
@@ -46,6 +49,7 @@ public class StoneSpend {
     public static int QUARTZ_DURABLE = 6;
     public static int PRISMARINE_CRYSTALS_DURABLE = 3;
     public static int PRISMARINE_SHARD_DURABLE = 2;
+    public static int GOLD_INGOT_DURABLE = 3;
 
 
 //    public static int REDSTONE = 1;

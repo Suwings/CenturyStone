@@ -2,6 +2,7 @@ package top.suwings.skill;
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -15,13 +16,13 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import top.suwings.base.NullCallback;
 import top.suwings.base.SimpleBukkitRunnable;
+import top.suwings.book.CenturyBooks;
 import top.suwings.main.CenturyStone;
 import top.suwings.main.Tools;
 import top.suwings.power.LineRangeAttack;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import javax.tools.Tool;
+import java.util.*;
 
 
 public class StoneSkill {
@@ -105,6 +106,60 @@ public class StoneSkill {
             StoneWearManager.autoStoneBroken(player, material, StoneSpend.PRISMARINE_SHARD_DURABLE, itemStack, StoneSpend.PRISMARINE_SHARD);
             this.seaCrystalAbyss();
         }
+        // 附魔书
+        if (itemStack.getType() == Material.ENCHANTED_BOOK) {
+            SkillCoolDown.setSkillCoolDown(player, itemStack.getType(), StoneSpend.PRISMARINE_SHARD_CD_TIME);
+            Map<Enchantment, Integer> enchantmentMap = itemStack.getEnchantments();
+            for (Map.Entry<Enchantment, Integer> entry : enchantmentMap.entrySet()) {
+                Enchantment enchantment = entry.getKey();
+                int level = entry.getValue();
+                CenturyBooks.onUseCenturyBook(player, enchantment, level);
+                // 有且只有一个效果能够被触发
+                break;
+            }
+        }
+        // 金锭
+        if (itemStack.getType() == Material.GOLD_INGOT && itemAmount >= StoneSpend.GOLD_INGOT) {
+            SkillCoolDown.setSkillCoolDown(player, itemStack.getType(), StoneSpend.GOLD_INGOT_CD_TIME);
+            StoneWearManager.autoStoneBroken(player, material, StoneSpend.GOLD_INGOT_DURABLE, itemStack, StoneSpend.GOLD_INGOT);
+            this.aeraInvincible();
+        }
+    }
+
+    // 技能效果
+    // 滞留型区域无敌
+    private void aeraInvincible() {
+        double radius = 4;
+        final int effectRange = (int) radius;
+        int effectTime = 20;
+        final Location location = player.getEyeLocation().clone();
+        final List<Player>[] godPlayerList = new List[]{new ArrayList<>()};
+        List<Player> tmpGodPlayerList = new ArrayList<>();
+        // 播放声音
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
+        // 区域粒子效果
+        Tools.spawnCircleParticle(location, Particle.SLIME, radius, 4 * 20, effectTime, (Object self) -> {
+            Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
+            for (Entity entity : nearEntity) {
+                if (entity instanceof Player) {
+                    Player entityPlayer = (Player) entity;
+                    entityPlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3 * 20, 1));
+                    // 给与玩家无敌
+                    Tools.setPlayerGod(entityPlayer, true);
+                    tmpGodPlayerList.add(entityPlayer);
+                    continue;
+                }
+                if (entity instanceof LivingEntity) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3 * 20, 1));
+                }
+            }
+            List<Player> diffPlayer = Tools.listCompare(godPlayerList[0], tmpGodPlayerList);
+            for (Player player : diffPlayer) {
+                Tools.setPlayerGod(player, false);
+            }
+            godPlayerList[0] = tmpGodPlayerList;
+        });
     }
 
     // 技能效果
@@ -129,7 +184,6 @@ public class StoneSkill {
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3 * 20, 1));
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 3 * 20, 1));
                 }
             }
         });
@@ -303,10 +357,10 @@ public class StoneSkill {
         // 播放声音
         player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 12, 1);
         // 对范围内的怪物生命实体暂时性取消 AI
-        final int noAITime = 10;
+        final int noAITime = 8;
         final int effectRange = 16;
         // 创造粒子圆
-        Tools.spawnCircleParticle(player.getEyeLocation().clone(), Particle.END_ROD, effectRange, 20, 9, new NullCallback());
+        Tools.spawnCircleParticle(player.getEyeLocation().clone(), Particle.END_ROD, effectRange, 20, 7, new NullCallback());
         // 周围怪物给予效果
         List<Entity> nearEntity = player.getNearbyEntities(effectRange, effectRange, effectRange);
         List<LivingEntity> noAiEntity = new LinkedList<>();
@@ -331,7 +385,6 @@ public class StoneSkill {
             @Override
             public void run() {
                 for (LivingEntity livingEntity : noAiEntity) {
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10 * 20, 1));
                     livingEntity.setAI(true);
                 }
             }
@@ -373,7 +426,7 @@ public class StoneSkill {
         final World playerWorld = player.getWorld();
         int effectTime = 2;
         // 释放直线范围攻击效果
-        new LineRangeAttack(player, Particle.END_ROD, 0.4, (currentLocation) -> {
+        new LineRangeAttack(player, Particle.END_ROD, 0.35, (currentLocation) -> {
             Location location = (Location) currentLocation;
             Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
             for (Entity entity : entities) {
@@ -384,7 +437,7 @@ public class StoneSkill {
                     // 对怪物造成10%的比例伤害，但是最大伤害不可超过20血，最小不低于10
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.1;
-                    if (damageHealth >= 30) damageHealth = 30;
+                    if (damageHealth >= 20) damageHealth = 20;
                     if (damageHealth <= 4) damageHealth = 4;
                     livingEntity.damage(damageHealth, player);
                 }

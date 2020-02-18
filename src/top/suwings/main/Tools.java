@@ -11,8 +11,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import top.suwings.base.MineCallback;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Tools {
 
@@ -36,6 +38,26 @@ public class Tools {
         }
     }
 
+    // 玩家无敌设置方法
+    public static void setPlayerGod(Player player, boolean f) {
+        if (f) {
+            godPlayerMap.put(player.getUniqueId().toString(), true);
+        } else {
+            godPlayerMap.remove(player.getUniqueId().toString());
+        }
+    }
+
+    //比较两个list
+    //取出存在menuOneList中，但不存在resourceList中的数据，差异数据放入differentList
+    public static <T> List<T> listCompare(List<T> menuOneList, List<T> resourceList) {
+        List<T> differentList = new ArrayList<T>();
+        for (T resource : menuOneList) { //取出每一个menuOneList
+            if (!resourceList.contains(resource)) { //不存在于resourceList，则加入
+                differentList.add(resource);
+            }
+        }
+        return differentList;
+    }
 
     public static void playerLevelHealth(Player player) {
         int currentLevel = player.getLevel();
