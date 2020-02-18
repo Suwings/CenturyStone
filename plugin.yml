@@ -1,0 +1,8 @@
+name: CenturyStone
+main: top.suwings.main.CenturyStone
+version: 0.0.1
+api-version: 1.14
+commands:
+  Hi:
+    description: Hi
+    usage: /<command>
