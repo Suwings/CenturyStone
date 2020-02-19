@@ -22,7 +22,7 @@ public class CoalS extends Power {
         // 群体周围实体加成效果
         final int effectRange = 8;
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 12, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 8, 1);
         final int effectTime = 10;
         List<Entity> nearEntity = player.getNearbyEntities(effectRange, effectRange, effectRange);
         for (Entity entity : nearEntity) {

@@ -28,7 +28,7 @@ public class Emerald extends Power {
                 200, 0, 0, 0, 1
         );
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 12, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_THUNDER, 8, 1);
         // 对范围内的怪物生命实体暂时性取消 AI
         final int noAITime = 8;
         final int effectRange = 16;

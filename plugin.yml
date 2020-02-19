@@ -1,7 +1,7 @@
 name: CenturyStone
-main: top.suwings.main.CenturyStone
+main: top.suwings.main.Main
 version: 1.0.0
-api-version: 1.14.4
+api-version: 1.14
 commands:
   Hi:
     description: centurystone
