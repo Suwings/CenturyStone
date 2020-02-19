@@ -19,25 +19,15 @@ import top.suwings.base.SimpleBukkitRunnable;
 import top.suwings.book.CenturyBooks;
 import top.suwings.main.CenturyStone;
 import top.suwings.main.Tools;
-import top.suwings.power.AreaInvincible;
-import top.suwings.power.LineRangeAttack;
+import top.suwings.power.*;
 
 import javax.tools.Tool;
 import java.util.*;
 
 
 public class StoneSkill {
-    //EMERALD 绿宝石 DIAMOND 钻石 FLINT 燧石  LAPIS_LAZULI 青金石
-
-    private Player player;
-    private ItemStack itemStack;
-
-    // 所有石头的效果触发事件
+    // 所有石头与附魔书的效果触发事件
     public void onStoneSkill(final Player player, final ItemStack itemStack) {
-        this.player = player;
-        this.itemStack = itemStack;
-        Material material = itemStack.getType();
-        final int itemAmount = itemStack.getAmount();
         // 技能冷却检测
         if (SkillCoolDown.isSkillCooling(player, itemStack.getType())) {
             // 玩家技能冷却粒子提示ITEM ARMOR EQUIP GENERIC
@@ -48,53 +38,54 @@ public class StoneSkill {
         }
         // 绿宝石
         if (itemStack.getType() == Material.EMERALD) {
-
+            new Emerald().releasePower(player, itemStack);
         }
         // 钻石
         if (itemStack.getType() == Material.DIAMOND) {
-
+            new Diamond().releasePower(player, itemStack);
         }
         // 燧石
         if (itemStack.getType() == Material.FLINT) {
-
+            new LineRangeAttack().releasePower(player, itemStack);
         }
         // 青金石
         if (itemStack.getType() == Material.LAPIS_LAZULI) {
-
+            new LapisLazult().releasePower(player, itemStack);
         }
         // 碳
         if (itemStack.getType() == Material.COAL) {
-
+            new CoalS().releasePower(player, itemStack);
         }
         // 萤石
         if (itemStack.getType() == Material.GLOWSTONE_DUST) {
-
+            new GlowStone().releasePower(player, itemStack);
         }
         // 火药
         if (itemStack.getType() == Material.GUNPOWDER) {
-
+            new Gunpowder().releasePower(player, itemStack);
         }
         // 下届石英水晶
         if (itemStack.getType() == Material.QUARTZ) {
-
+            new Quartz().releasePower(player, itemStack);
         }
         // 海晶沙粒
         if (itemStack.getType() == Material.PRISMARINE_CRYSTALS) {
-
+            new DamageAbsorption().releasePower(player, itemStack);
         }
         // 海晶碎片
         if (itemStack.getType() == Material.PRISMARINE_SHARD) {
-
+            new SeaCrystalAbyss().releasePower(player, itemStack);
         }
         // 金锭
         if (itemStack.getType() == Material.GOLD_INGOT) {
-
+            new AreaInvincible().releasePower(player, itemStack);
         }
         // 铁锭
         if (itemStack.getType() == Material.IRON_INGOT) {
-
+            new PrecisionAttack().releasePower(player, itemStack);
         }
-        // 附魔书
+
+        // 附魔书 - 全新的方案
         if (itemStack.getType() == Material.ENCHANTED_BOOK) {
             SkillCoolDown.setSkillCoolDown(player, itemStack.getType(), StoneSpend.PRISMARINE_SHARD_CD_TIME);
             Map<Enchantment, Integer> enchantmentMap = itemStack.getEnchantments();
@@ -106,7 +97,6 @@ public class StoneSkill {
                 break;
             }
         }
+
     }
-
-
 }

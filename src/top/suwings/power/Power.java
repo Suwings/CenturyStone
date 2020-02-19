@@ -34,6 +34,8 @@ public abstract class Power {
     public abstract int getDurableValue();
 
     public abstract int getUseSpendValue();
+
+
 }
 
 

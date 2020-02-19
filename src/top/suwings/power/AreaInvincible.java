@@ -31,7 +31,7 @@ public class AreaInvincible extends Power {
         // 播放声音
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
         // 区域粒子效果
-        Tools.spawnCircleParticle(location, Particle.END_ROD, radius, 10, effectTime * 2, (Object self) -> {
+        Tools.spawnCircleParticle(location, Particle.REDSTONE, radius, 10, effectTime * 2, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
