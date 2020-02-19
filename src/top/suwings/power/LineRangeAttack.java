@@ -45,8 +45,8 @@ public class LineRangeAttack extends Power {
                     // 对怪物造成5%的比例伤害，但是最大伤害不可超过30血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.05;
-                    if (damageHealth >= Tools.damageMultipleConversion(16))
-                        damageHealth = Tools.damageMultipleConversion(16);
+                    if (damageHealth >= Tools.damageMultipleConversion(8))
+                        damageHealth = Tools.damageMultipleConversion(8);
                     if (damageHealth <= 3) damageHealth = 3;
 //                    livingEntity.damage(damageHealth, player);
                     Tools.damageEntity(livingEntity, damageHealth, player);
