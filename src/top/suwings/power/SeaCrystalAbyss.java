@@ -8,65 +8,51 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import top.suwings.base.NullCallback;
 import top.suwings.main.Tools;
 
 import java.util.Collection;
 import java.util.HashMap;
 
-public class AreaInvincible extends Power {
+public class SeaCrystalAbyss extends Power {
 
-    private final int CD_TIME = 30 * TICK;
-    private final int SPEND = 1;
-    private final int DURABLE = 1;
-
-    // 滞留型区域无敌
     @Override
     public void release(Player player, HashMap<Object, Object> config) {
-        double radius = 8;
+        int effectTime = 30;
+        double radius = 10;
         final int effectRange = (int) radius;
-        int effectTime = 15;
         final Location location = player.getEyeLocation().clone();
-        HashMap<Player, Integer> playerHealthMap = new HashMap<>();
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
-        // 区域粒子效果
-        Tools.spawnCircleParticle(location, Particle.END_ROD, radius, 10, effectTime * 2, (Object self) -> {
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, effectRange, 2);
+        // 释放粒子圆
+        Tools.spawnCircleParticle(location, Particle.FLAME, radius, 20, effectTime, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
                     Player entityPlayer = (Player) entity;
-                    // 虽然是假的无敌，但是很厉害的无敌了
-                    if (playerHealthMap.get(entityPlayer) != null) {
-                        entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
-                    } else {
-                        playerHealthMap.put(player, (int) entityPlayer.getHealth());
-                        entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
-                    }
+                    entityPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3 * 20, 1));
+                    entityPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 3 * 20, 1));
                     continue;
                 }
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3 * 20, 1));
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3 * 20, 1));
                 }
             }
         });
-        Tools.spawnCircleParticle(location, Particle.FLAME, radius - 1, 20, effectTime, new NullCallback());
     }
 
     @Override
     public int getCoolDownTick() {
-        return CD_TIME;
+        return 30 * TICK;
     }
 
     @Override
     public int getDurableValue() {
-        return DURABLE;
+        return 3;
     }
 
     @Override
     public int getUseSpendValue() {
-        return SPEND;
+        return 1;
     }
 }

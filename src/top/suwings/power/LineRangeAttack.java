@@ -2,17 +2,25 @@ package top.suwings.power;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import top.suwings.base.MineCallback;
 import top.suwings.base.SimpleBukkitRunnable;
 import top.suwings.main.CenturyStone;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 public class LineRangeAttack extends Power {
 
-    public LineRangeAttack(Player player, Particle particle, double attackTime, MineCallback tickCallback) {
+    public void releaseLineRangeAttack(Player player, Particle particle, double attackTime, MineCallback tickCallback) {
         final World playerWorld = player.getWorld();
         double processMultiplyInitValue = 2;
         double[] processMultiply = {processMultiplyInitValue};
@@ -55,9 +63,36 @@ public class LineRangeAttack extends Power {
         }).runTaskTimer(CenturyStone.centuryStone, 0, 1);
     }
 
+    // 世纪之石技能效果
+    // 燧石效果
+    @Override
+    public void release(Player player, HashMap<Object, Object> config) {
+        player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
+        final World playerWorld = player.getWorld();
+        int effectTime = 2;
+        // 释放直线范围攻击效果
+        this.releaseLineRangeAttack(player, Particle.END_ROD, 0.35, (currentLocation) -> {
+            Location location = (Location) currentLocation;
+            Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
+            for (Entity entity : entities) {
+                if (entity instanceof Player) continue;
+                if (entity instanceof LivingEntity) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
+                    // 对怪物造成8%的比例伤害，但是最大伤害不可超过20血，最小不低于3
+                    double currentHealth = livingEntity.getHealth();
+                    double damageHealth = (int) currentHealth * 0.08;
+                    if (damageHealth >= 20) damageHealth = 20;
+                    if (damageHealth <= 3) damageHealth = 3;
+                    livingEntity.damage(damageHealth, player);
+                }
+            }
+        });
+    }
+
     @Override
     public int getCoolDownTick() {
-        return 2 * 20;
+        return 2 * TICK;
     }
 
     @Override
