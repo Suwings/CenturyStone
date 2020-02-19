@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin implements Listener {
 
     public static JavaPlugin self = null;
-    public static double AttackMultiple = 2.0d;
+    public static double AttackMultiple = 1.5d;
 
     public void onEnable(){
         Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);

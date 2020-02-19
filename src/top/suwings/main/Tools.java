@@ -3,6 +3,7 @@ package top.suwings.main;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -62,6 +63,16 @@ public class Tools {
         }.runTaskTimer(Main.self, 0, tick);
 
         godPlayerByTick.put(player, bukkitTask);
+    }
+
+    public static void damageEntity(LivingEntity livingEntity, double v, Player source) {
+        double health = livingEntity.getHealth();
+        if ((health - v) > 0) {
+            livingEntity.setHealth(health - v);
+        } else {
+            livingEntity.setHealth(0);
+        }
+        livingEntity.damage(1, source);
     }
 
 
