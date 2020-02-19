@@ -25,7 +25,7 @@ public class AreaInvincible extends Power {
     public void release(Player player, HashMap<Object, Object> config) {
         double radius = 6;
         final int effectRange = (int) radius;
-        int effectTime = 15;
+        int effectTime = 14;
         final Location location = player.getEyeLocation().clone();
         HashMap<Player, Integer> playerHealthMap = new HashMap<>();
         // 播放声音
@@ -36,12 +36,14 @@ public class AreaInvincible extends Power {
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
                     Player entityPlayer = (Player) entity;
-                    // 虽然是假的无敌，但是很厉害的无敌了
-                    if (playerHealthMap.get(entityPlayer) != null) {
-                        entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
-                    } else {
-                        playerHealthMap.put(player, (int) entityPlayer.getHealth());
-                        entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
+                    if (!entityPlayer.isDead() || entityPlayer.getHealth() > 0) {
+                        // 虽然是假的无敌，但是很厉害的无敌了
+                        if (playerHealthMap.get(entityPlayer) != null) {
+                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
+                        } else {
+                            playerHealthMap.put(player, (int) entityPlayer.getHealth());
+                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
+                        }
                     }
                     continue;
                 }

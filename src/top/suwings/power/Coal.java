@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.HashMap;
 import java.util.List;
 
-public class CoalS extends Power {
+public class Coal extends Power {
     @Override
     public void release(Player player, HashMap<Object, Object> config) {
         // 创建粒子效果

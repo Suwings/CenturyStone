@@ -34,17 +34,17 @@ public class LineRangeAttack extends Power {
             Location location = (Location) currentLocation;
             Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
             for (Entity entity : entities) {
-                    if (entity instanceof Player) {
-                        continue;
-                    };
+//                    if (entity instanceof Player) {
+//                        continue;
+//                    };
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
-                    // 对怪物造成8%的比例伤害，但是最大伤害不可超过20血，最小不低于3
+                    // 对怪物造成8%的比例伤害，但是最大伤害不可超过30血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.08;
-                    if (damageHealth >= Tools.damageMultipleConversion(16))
-                        damageHealth = Tools.damageMultipleConversion(16);
+                    if (damageHealth >= Tools.damageMultipleConversion(30))
+                        damageHealth = Tools.damageMultipleConversion(30);
                     if (damageHealth <= 3) damageHealth = 3;
                     livingEntity.damage(damageHealth, player);
                 }

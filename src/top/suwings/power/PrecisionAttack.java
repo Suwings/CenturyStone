@@ -34,12 +34,12 @@ public class PrecisionAttack extends Power {
                 player.spawnParticle(Particle.CLOUD, location, 10, 0, 0, 0, 2);
                 Collection<Entity> entities = player.getWorld().getNearbyEntities(location, 1, 1, 1);
                 for (Entity entity : entities) {
-                    if (entity instanceof Player) continue;
+//                    if (entity instanceof Player) continue;
                     if (entity instanceof LivingEntity) {
                         LivingEntity livingEntity = (LivingEntity) entity;
                         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                         // 取随机伤害值
-                        int damageHealth = Tools.random(4, Tools.damageMultipleConversion(26));
+                        int damageHealth = Tools.random(4, Tools.damageMultipleConversion(60));
                         livingEntity.damage(damageHealth, player);
                     }
                 }
@@ -49,7 +49,7 @@ public class PrecisionAttack extends Power {
 
     @Override
     public int getCoolDownTick() {
-        return 6 * TICK;
+        return 5 * TICK;
     }
 
     @Override

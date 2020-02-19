@@ -39,7 +39,7 @@ public class StoneSkill {
         }
         // 碳
         if (itemStack.getType() == Material.COAL) {
-            new CoalS().releasePower(player, itemStack);
+            new Coal().releasePower(player, itemStack);
         }
         // 萤石
         if (itemStack.getType() == Material.GLOWSTONE_DUST) {
