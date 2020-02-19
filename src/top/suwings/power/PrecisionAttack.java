@@ -22,11 +22,11 @@ public class PrecisionAttack extends Power {
         int effectTime = 10;
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 4, 1);
         player.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE,
-                player.getEyeLocation().add(player.getEyeLocation().getDirection()), 40, 0, 0, 0);
+                player.getEyeLocation().add(player.getEyeLocation().getDirection()), 50, 0, 0, 0);
         new SimpleBukkitRunnable((o) -> {
+            player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 4, 6);
             new LineRangeAttack().releaseLineRangeAttack(player, Particle.END_ROD, 1.6, false, (currentLocation) -> {
                 Location location = (Location) currentLocation;
-
                 Collection<Entity> entities = player.getWorld().getNearbyEntities(location, 1, 1, 1);
                 for (Entity entity : entities) {
                     if (entity instanceof Player) continue;
@@ -39,21 +39,21 @@ public class PrecisionAttack extends Power {
                     }
                 }
             });
-        }).runTaskTimer(Main.self, 0, 40);
+        }).runTaskLater(Main.self, 60);
     }
 
     @Override
     public int getCoolDownTick() {
-        return 0;
+        return 5 * TICK;
     }
 
     @Override
     public int getDurableValue() {
-        return 0;
+        return 2;
     }
 
     @Override
     public int getUseSpendValue() {
-        return 0;
+        return 1;
     }
 }
