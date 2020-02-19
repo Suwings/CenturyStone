@@ -27,7 +27,7 @@ public class PrecisionAttack extends Power {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                     // 取随机伤害值
-                    int damageHealth = Tools.random(1, (int) (30 * Main.AttackMultiple));
+                    int damageHealth = Tools.random(1, Tools.damageMultipleConversion(24));
                     livingEntity.damage(damageHealth, player);
                 }
             }

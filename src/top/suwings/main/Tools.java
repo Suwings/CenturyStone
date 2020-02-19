@@ -94,6 +94,11 @@ public class Tools {
         }
     }
 
+
+    public static int damageMultipleConversion(double v) {
+        return (int) (v * Main.AttackMultiple);
+    }
+
     public static void spawnCircleParticle(Location location, Particle particleEffect,
                                            double radius, int period, int runnableCount,
                                            MineCallback callback) {

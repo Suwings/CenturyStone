@@ -14,6 +14,7 @@ import org.bukkit.util.Vector;
 import top.suwings.base.MineCallback;
 import top.suwings.base.SimpleBukkitRunnable;
 import top.suwings.main.Main;
+import top.suwings.main.Tools;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,8 +39,8 @@ public class LineRangeAttack extends Power {
                     // 对怪物造成8%的比例伤害，但是最大伤害不可超过20血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.08;
-                    if (damageHealth >= (int) (20 * Main.AttackMultiple))
-                        damageHealth = (int) (20 * Main.AttackMultiple);
+                    if (damageHealth >= Tools.damageMultipleConversion(20))
+                        damageHealth = Tools.damageMultipleConversion(20);
                     if (damageHealth <= 3) damageHealth = 3;
                     livingEntity.damage(damageHealth, player);
                 }
