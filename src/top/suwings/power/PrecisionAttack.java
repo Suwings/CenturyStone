@@ -27,7 +27,7 @@ public class PrecisionAttack extends Power {
         Location eyeLocation = player.getEyeLocation();
         // 释放
         new SimpleBukkitRunnable((o) -> {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2 * 20, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 4 * 20, 1));
             player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 4, 6);
             new LineRangeAttack().releaseLineRangeAttack(eyeLocation, Particle.END_ROD, 0.6d, false, (currentLocation) -> {
                 Location location = (Location) currentLocation;
@@ -39,18 +39,18 @@ public class PrecisionAttack extends Power {
                         LivingEntity livingEntity = (LivingEntity) entity;
                         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                         // 取随机伤害值
-                        int damageHealth = Tools.random(1, Tools.damageMultipleConversion(70));
+                        int damageHealth = Tools.random(1, Tools.damageMultipleConversion(100));
                         // livingEntity.damage(damageHealth, player);
                         Tools.damageEntity(livingEntity, damageHealth, player);
                     }
                 }
             });
-        }).runTaskLater(Main.self, 50);
+        }).runTaskLater(Main.self, 60);
     }
 
     @Override
     public int getCoolDownTick() {
-        return 5 * TICK;
+        return 6 * TICK;
     }
 
     @Override
