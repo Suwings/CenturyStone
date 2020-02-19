@@ -6,7 +6,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import top.suwings.main.CenturyStone;
+import top.suwings.main.Main;
 import top.suwings.main.Tools;
 
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class Diamond extends Power {
             public void run() {
                 new Emerald().release(player, null);
             }
-        }.runTaskLater(CenturyStone.centuryStone, 40);
+        }.runTaskLater(Main.self, 40);
     }
 
     // 玩家血量设置方法

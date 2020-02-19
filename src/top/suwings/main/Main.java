@@ -6,14 +6,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class CenturyStone extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin implements Listener {
 
-    public static JavaPlugin centuryStone = null;
+    public static JavaPlugin self = null;
+    public static double AttackMultiple = 1.0d;
 
     public void onEnable(){
         Bukkit.getServer().getPluginManager().registerEvents(new Events(), this);
         getLogger().info("CenturyStone enable!");
-        centuryStone = this;
+        self = this;
     }
 
     public void onDisable(){

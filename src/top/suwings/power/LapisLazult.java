@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import top.suwings.main.CenturyStone;
+import top.suwings.main.Main;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +41,7 @@ public class LapisLazult extends Power {
                     }
                 }
             }
-        }.runTaskLater(CenturyStone.centuryStone, 30);
+        }.runTaskLater(Main.self, 30);
     }
 
     @Override

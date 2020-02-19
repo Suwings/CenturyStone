@@ -7,7 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import top.suwings.base.NullCallback;
-import top.suwings.main.CenturyStone;
+import top.suwings.main.Main;
 import top.suwings.main.Tools;
 
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class Emerald extends Power {
                     livingEntity.setAI(true);
                 }
             }
-        }.runTaskLater(CenturyStone.centuryStone, noAITime * 20);
+        }.runTaskLater(Main.self, noAITime * 20);
     }
 
     @Override

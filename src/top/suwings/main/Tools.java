@@ -1,10 +1,8 @@
 package top.suwings.main;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -12,10 +10,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import top.suwings.base.MineCallback;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Tools {
@@ -63,7 +59,7 @@ public class Tools {
                 godPlayerMap.remove(player.getUniqueId().toString());
                 godPlayerByTick.remove(player);
             }
-        }.runTaskTimer(CenturyStone.centuryStone, 0, tick);
+        }.runTaskTimer(Main.self, 0, tick);
 
         godPlayerByTick.put(player, bukkitTask);
     }
@@ -126,7 +122,12 @@ public class Tools {
                 callback.run(this);
                 currentRunCount[0] += 1;
             }
-        }.runTaskTimer(CenturyStone.centuryStone, 0, period);
+        }.runTaskTimer(Main.self, 0, period);
+    }
+
+    public static int random(int min, int max) {
+        //(最小值+Math.random()*(最大值-最小值+1))
+        return (int) (min + Math.random() * (max - min + 1));
     }
 
     // 爆炸效果
@@ -191,7 +192,7 @@ public class Tools {
                             power, false, false
                     );
                 }
-            }.runTaskLater(CenturyStone.centuryStone, initTime);
+            }.runTaskLater(Main.self, initTime);
             // 爆炸距离递增
             safeDistance += 1;
         }

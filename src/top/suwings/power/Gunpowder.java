@@ -4,7 +4,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import top.suwings.main.CenturyStone;
+import top.suwings.main.Main;
 import top.suwings.main.Tools;
 
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class Gunpowder extends Power {
             public void run() {
                 Tools.setPlayerGod(player.getUniqueId().toString(), false);
             }
-        }.runTaskLater(CenturyStone.centuryStone, 30);
+        }.runTaskLater(Main.self, 30);
     }
 
     @Override

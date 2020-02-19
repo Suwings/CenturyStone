@@ -3,12 +3,10 @@ package top.suwings.skill;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import top.suwings.main.CenturyStone;
+import top.suwings.main.Main;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class SkillCoolDown {
 
@@ -36,7 +34,7 @@ public class SkillCoolDown {
                     linkedList.remove(material);
                 }
             }
-        }.runTaskLater(CenturyStone.centuryStone,cdTime);
+        }.runTaskLater(Main.self,cdTime);
     }
 
     public static boolean isSkillCooling(Player player, Material material) {
