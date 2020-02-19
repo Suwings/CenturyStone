@@ -22,9 +22,9 @@ public class Main extends JavaPlugin implements Listener {
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(command.getName().equalsIgnoreCase("Hi"))//command获得的指令为Hi时输出“你们好”。
+        if(command.getName().equalsIgnoreCase("centurystone"))//command获得的指令为Hi时输出“你们好”。
         {
-            sender.sendMessage("Hi~");
+            sender.sendMessage("暂无使用说明");
             return true;//返回true告诉服务器执行指令
         }
         return false;
