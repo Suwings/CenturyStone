@@ -16,20 +16,20 @@ import java.util.HashMap;
 
 public class AreaInvincible extends Power {
 
-    private final int CD_TIME = 30 * TICK;
+    private final int CD_TIME = 36 * TICK;
     private final int SPEND = 1;
-    private final int DURABLE = 1;
+    private final int DURABLE = 2;
 
     // 滞留型区域无敌
     @Override
     public void release(Player player, HashMap<Object, Object> config) {
-        double radius = 8;
+        double radius = 6;
         final int effectRange = (int) radius;
         int effectTime = 15;
         final Location location = player.getEyeLocation().clone();
         HashMap<Player, Integer> playerHealthMap = new HashMap<>();
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, effectRange + 2, 2);
         // 区域粒子效果
         Tools.spawnCircleParticle(location, Particle.CLOUD, radius, 10, effectTime * 2, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
@@ -49,6 +49,7 @@ public class AreaInvincible extends Power {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3 * 20, 1));
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3 * 20, 1));
+                    livingEntity.damage(Tools.damageMultipleConversion(1), player);
                 }
             }
         });

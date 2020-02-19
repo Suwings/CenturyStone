@@ -24,7 +24,9 @@ public class LineRangeAttack extends Power {
     // 燧石效果
     @Override
     public void release(Player player, HashMap<Object, Object> config) {
-        player.playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1, 2);
+        // 释放
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 2);
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1));
         final World playerWorld = player.getWorld();
         int effectTime = 2;
         // 释放直线范围攻击效果
@@ -32,15 +34,17 @@ public class LineRangeAttack extends Power {
             Location location = (Location) currentLocation;
             Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
             for (Entity entity : entities) {
-                if (entity instanceof Player) continue;
+                    if (entity instanceof Player) {
+                        continue;
+                    };
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                     // 对怪物造成8%的比例伤害，但是最大伤害不可超过20血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.08;
-                    if (damageHealth >= Tools.damageMultipleConversion(20))
-                        damageHealth = Tools.damageMultipleConversion(20);
+                    if (damageHealth >= Tools.damageMultipleConversion(16))
+                        damageHealth = Tools.damageMultipleConversion(16);
                     if (damageHealth <= 3) damageHealth = 3;
                     livingEntity.damage(damageHealth, player);
                 }
@@ -106,11 +110,11 @@ public class LineRangeAttack extends Power {
         }).runTaskTimer(Main.self, 0, 1);
     }
 
-    public void releaseLineRangeAttack(Player player, Particle particle, double attackTime, boolean isOtherLine, MineCallback tickCallback) {
-        final World playerWorld = player.getWorld();
+    public void releaseLineRangeAttack(Location location, Particle particle, double attackTime, boolean isOtherLine, MineCallback tickCallback) {
+        final World playerWorld = location.getWorld();
         double processMultiplyInitValue = 2;
         double[] processMultiply = {processMultiplyInitValue};
-        final Location location1 = player.getEyeLocation().clone();
+        final Location location1 = location.clone();
         new SimpleBukkitRunnable((self) -> {
             Vector directionVector = location1.getDirection();
             Location location2 = location1.add(directionVector.multiply(processMultiply[0]));
