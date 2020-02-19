@@ -125,6 +125,12 @@ public class StoneSkill {
             StoneWearManager.autoStoneBroken(player, material, StoneSpend.GOLD_INGOT_DURABLE, itemStack, StoneSpend.GOLD_INGOT);
             new AreaInvincible(player);
         }
+        // 铁锭
+        if (itemStack.getType() == Material.IRON_INGOT && itemAmount >= StoneSpend.GOLD_INGOT) {
+            SkillCoolDown.setSkillCoolDown(player, itemStack.getType(), StoneSpend.GOLD_INGOT_CD_TIME);
+            StoneWearManager.autoStoneBroken(player, material, StoneSpend.GOLD_INGOT_DURABLE, itemStack, StoneSpend.GOLD_INGOT);
+            new AreaInvincible(player);
+        }
     }
 
     // 技能效果
@@ -399,11 +405,11 @@ public class StoneSkill {
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
-                    // 对怪物造成10%的比例伤害，但是最大伤害不可超过20血，最小不低于10
+                    // 对怪物造成8%的比例伤害，但是最大伤害不可超过20血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
-                    double damageHealth = (int) currentHealth * 0.1;
+                    double damageHealth = (int) currentHealth * 0.08;
                     if (damageHealth >= 20) damageHealth = 20;
-                    if (damageHealth <= 4) damageHealth = 4;
+                    if (damageHealth <= 3) damageHealth = 3;
                     livingEntity.damage(damageHealth, player);
                 }
             }

@@ -3,19 +3,12 @@ package top.suwings.power;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import top.suwings.base.MineCallback;
-import top.suwings.base.Power;
 import top.suwings.base.SimpleBukkitRunnable;
 import top.suwings.main.CenturyStone;
-
-import java.util.Collection;
 
 public class LineRangeAttack extends Power {
 
@@ -60,6 +53,21 @@ public class LineRangeAttack extends Power {
                 ((BukkitRunnable) self).cancel();
             }
         }).runTaskTimer(CenturyStone.centuryStone, 0, 1);
+    }
+
+    @Override
+    public int getCoolDownTick() {
+        return 2 * 20;
+    }
+
+    @Override
+    public int getDurableValue() {
+        return 6;
+    }
+
+    @Override
+    public int getUseSpendValue() {
+        return 1;
     }
 }
 

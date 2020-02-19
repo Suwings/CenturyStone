@@ -49,7 +49,7 @@ public class StoneSpend {
     public static int QUARTZ_DURABLE = 6;
     public static int PRISMARINE_CRYSTALS_DURABLE = 3;
     public static int PRISMARINE_SHARD_DURABLE = 2;
-    public static int GOLD_INGOT_DURABLE = 3;
+    public static int GOLD_INGOT_DURABLE = 1;
 
 
 //    public static int REDSTONE = 1;

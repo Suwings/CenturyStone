@@ -17,9 +17,11 @@ public class StoneWearManager {
 
     public static void initStoneCount(Player player, Material material) {
         List<EffectStone> effectStoneList = stoneDegreeWearMap.get(player);
-        for (EffectStone effectStone : effectStoneList) {
-            if (effectStone.getMaterial() == material) {
-                effectStone.setUsedCount(0);
+        if (effectStoneList != null) {
+            for (EffectStone effectStone : effectStoneList) {
+                if (effectStone.getMaterial() == material) {
+                    effectStone.setUsedCount(0);
+                }
             }
         }
     }

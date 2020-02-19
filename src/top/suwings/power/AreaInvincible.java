@@ -8,24 +8,29 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import top.suwings.base.Power;
+import top.suwings.base.NullCallback;
 import top.suwings.main.Tools;
 
 import java.util.Collection;
 import java.util.HashMap;
 
 public class AreaInvincible extends Power {
+
+    private final int CD_TIME =  30 * 20;
+    private final int SPEND = 1;
+    private final int DURABLE = 1;
+
     // 滞留型区域无敌
     public AreaInvincible(Player player) {
-        double radius = 4;
+        double radius = 8;
         final int effectRange = (int) radius;
-        int effectTime = 10;
+        int effectTime = 15;
         final Location location = player.getEyeLocation().clone();
         HashMap<Player, Integer> playerHealthMap = new HashMap<>();
         // 播放声音
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_BREAK, (int) radius, 2);
         // 区域粒子效果
-        Tools.spawnCircleParticle(location, Particle.END_ROD, radius, 10, effectTime, (Object self) -> {
+        Tools.spawnCircleParticle(location, Particle.END_ROD, radius, 10, effectTime * 2, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
@@ -34,7 +39,7 @@ public class AreaInvincible extends Power {
                     if (playerHealthMap.get(entityPlayer) != null) {
                         entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
                     } else {
-                        playerHealthMap.put(player,(int)entityPlayer.getHealth());
+                        playerHealthMap.put(player, (int) entityPlayer.getHealth());
                         entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
                     }
                     continue;
@@ -46,5 +51,21 @@ public class AreaInvincible extends Power {
                 }
             }
         });
+        Tools.spawnCircleParticle(location, Particle.FLAME, radius - 1, 20, effectTime, new NullCallback());
+    }
+
+    @Override
+    public int getCoolDownTick() {
+        return CD_TIME;
+    }
+
+    @Override
+    public int getDurableValue() {
+        return DURABLE;
+    }
+
+    @Override
+    public int getUseSpendValue() {
+        return SPEND;
     }
 }
