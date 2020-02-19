@@ -41,7 +41,7 @@ public class AreaInvincible extends Power {
                         if (playerHealthMap.get(entityPlayer) != null) {
                             entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
                         } else {
-                            playerHealthMap.put(player, (int) entityPlayer.getHealth());
+                            playerHealthMap.put(entityPlayer, (int) entityPlayer.getHealth());
                             entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
                         }
                     }
