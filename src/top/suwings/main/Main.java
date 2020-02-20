@@ -48,8 +48,9 @@ public class Main extends JavaPlugin implements Listener {
                         itemStack.setAmount(itemStack.getAmount() - USE_ONCE_SPEND);
                         config.put("tp", toPlayer);
                         new ToPlayer().release(player, config);
+                        return true;
                     }
-                    sender.sendMessage("传送失败：传送水晶条件不足，需要手持3个绿宝石.");
+                    sender.sendMessage("传送失败：传送水晶条件不足，需要手持2个绿宝石.");
                     return true;
                 }
             }

@@ -15,8 +15,16 @@ public abstract class Power {
 
     public Power releasePower(Player player, ItemStack itemStack) {
         if (itemStack.getAmount() >= this.getUseSpendValue()) {
-            this.doCoolDownAndIsBroken(player,itemStack);
+            this.doCoolDownAndIsBroken(player, itemStack);
             this.release(player, null);
+        }
+        return this;
+    }
+
+    public Power releasePower(Player player, ItemStack itemStack, HashMap hashMap) {
+        if (itemStack.getAmount() >= this.getUseSpendValue()) {
+            this.doCoolDownAndIsBroken(player, itemStack);
+            this.release(player, hashMap);
         }
         return this;
     }
