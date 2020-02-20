@@ -31,7 +31,7 @@ public class LineRangeAttack extends Power {
         final World playerWorld = player.getWorld();
         int effectTime = 2;
         // 释放直线范围攻击效果
-        this.releaseLineRangeAttack(player, Particle.END_ROD, 0.35, (currentLocation) -> {
+        this.releaseLineRangeAttack(player, Particle.END_ROD, 0.3, (currentLocation) -> {
             Location location = (Location) currentLocation;
             Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
             for (Entity entity : entities) {
@@ -45,9 +45,9 @@ public class LineRangeAttack extends Power {
                     // 对怪物造成5%的比例伤害，但是最大伤害不可超过30血，最小不低于3
                     double currentHealth = livingEntity.getHealth();
                     double damageHealth = (int) currentHealth * 0.05;
-                    if (damageHealth >= Tools.damageMultipleConversion(8))
-                        damageHealth = Tools.damageMultipleConversion(8);
-                    if (damageHealth <= 3) damageHealth = 3;
+                    if (damageHealth >= Tools.damageMultipleConversion(4))
+                        damageHealth = Tools.damageMultipleConversion(4);
+                    if (damageHealth <= 1) damageHealth = 1;
 //                    livingEntity.damage(damageHealth, player);
                     Tools.damageEntity(livingEntity, damageHealth, player);
                 }
@@ -62,7 +62,7 @@ public class LineRangeAttack extends Power {
 
     @Override
     public int getDurableValue() {
-        return 6;
+        return 1;
     }
 
     @Override
