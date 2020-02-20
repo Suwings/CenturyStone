@@ -33,7 +33,7 @@ public class LineRangeAttack extends Power {
         // 释放直线范围攻击效果
         this.releaseLineRangeAttack(player.getEyeLocation(), Particle.DRAGON_BREATH, 0.15, false, (currentLocation) -> {
             Location location = (Location) currentLocation;
-            Collection<Entity> entities = playerWorld.getNearbyEntities(location, 0.4, 0.4, 0.4);
+            Collection<Entity> entities = playerWorld.getNearbyEntities(location, 1, 1, 1);
             for (Entity entity : entities) {
                 if (entity instanceof Player) {
                     continue;
@@ -42,7 +42,12 @@ public class LineRangeAttack extends Power {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                     // 对怪物造成5%的比例伤害，但是最大伤害不可超过30血，最小不低于3
-                    double damageHealth = Tools.damageMultipleConversion(Tools.random(2, 8));
+//                    double damageHealth = Tools.damageMultipleConversion(Tools.random(2, 8));
+                    double currentHealth = livingEntity.getHealth();
+                    double damageHealth = (int) currentHealth * 0.05;
+                    if (damageHealth >= Tools.damageMultipleConversion(20))
+                        damageHealth = Tools.damageMultipleConversion(20);
+                    if (damageHealth <= 2) damageHealth = 2;
                     Tools.damageEntity(livingEntity, damageHealth, player);
                 }
             }
@@ -51,12 +56,12 @@ public class LineRangeAttack extends Power {
 
     @Override
     public int getCoolDownTick() {
-        return 20 + 10;
+        return 20;
     }
 
     @Override
     public int getDurableValue() {
-        return 2;
+        return 3;
     }
 
     @Override
