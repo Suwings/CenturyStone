@@ -17,7 +17,7 @@ public class Gunpowder extends Power {
                 Particle.FLAME, player.getLocation(),
                 100, 0, 0, 0, 1
         );
-        player.playSound(player.getLocation(), Sound.ENTITY_ARMOR_STAND_BREAK, 6, 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_ARMOR_STAND_BREAK, 2, 1);
         // 临时给予玩家无敌并四周开始爆炸
         Tools.setPlayerGod(player.getUniqueId().toString(), true);
         // 创建连环爆炸效果

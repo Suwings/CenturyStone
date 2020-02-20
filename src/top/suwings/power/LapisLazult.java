@@ -21,7 +21,7 @@ public class LapisLazult extends Power {
                 Particle.END_ROD, player.getEyeLocation(),
                 800, 3, 3, 3
         );
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 5, 1);
         // 延时发动技能
         new BukkitRunnable() {
             @Override

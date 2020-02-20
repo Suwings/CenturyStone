@@ -26,7 +26,7 @@ public class GlowStone extends Power {
         final int effectRange = 8;
         final int effectTime = 10;
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, effectRange, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 6, 1);
         // 给自己
         Tools.setPlayerPotionEffect(player, effectTime, PotionEffectType.SPEED);
         Tools.setPlayerPotionEffect(player, effectTime, PotionEffectType.INCREASE_DAMAGE);

@@ -27,28 +27,22 @@ public class LineRangeAttack extends Power {
     public void release(Player player, HashMap<Object, Object> config) {
         // 释放
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 2);
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2 * 20, 1));
         final World playerWorld = player.getWorld();
         int effectTime = 2;
         // 释放直线范围攻击效果
-        this.releaseLineRangeAttack(player, Particle.END_ROD, 0.3, (currentLocation) -> {
+        this.releaseLineRangeAttack(player.getEyeLocation(), Particle.DRAGON_BREATH, 0.15, false, (currentLocation) -> {
             Location location = (Location) currentLocation;
-            Collection<Entity> entities = playerWorld.getNearbyEntities(location, 2, 2, 2);
+            Collection<Entity> entities = playerWorld.getNearbyEntities(location, 0.4, 0.4, 0.4);
             for (Entity entity : entities) {
                 if (entity instanceof Player) {
                     continue;
                 }
-                ;
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                     // 对怪物造成5%的比例伤害，但是最大伤害不可超过30血，最小不低于3
-                    double currentHealth = livingEntity.getHealth();
-                    double damageHealth = (int) currentHealth * 0.05;
-                    if (damageHealth >= Tools.damageMultipleConversion(4))
-                        damageHealth = Tools.damageMultipleConversion(4);
-                    if (damageHealth <= 1) damageHealth = 1;
-//                    livingEntity.damage(damageHealth, player);
+                    double damageHealth = Tools.damageMultipleConversion(Tools.random(2, 8));
                     Tools.damageEntity(livingEntity, damageHealth, player);
                 }
             }
@@ -57,12 +51,12 @@ public class LineRangeAttack extends Power {
 
     @Override
     public int getCoolDownTick() {
-        return 2 * TICK;
+        return 20 + 10;
     }
 
     @Override
     public int getDurableValue() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -149,8 +143,8 @@ public class LineRangeAttack extends Power {
                 );
             }
             tickCallback.run(location1);
-            processMultiply[0] += 0.01;
-            // attackTime 推荐是 0.4~0.8 大概0.4是40格
+            processMultiply[0] += 0.005;
+            // attackTime 推荐是 0.2~0.4 大概0.4是80格
             if (processMultiply[0] >= processMultiplyInitValue + attackTime) {
                 ((BukkitRunnable) self).cancel();
             }

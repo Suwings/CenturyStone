@@ -21,17 +21,17 @@ public class PrecisionAttack extends Power {
     public void release(Player player, HashMap<Object, Object> config) {
         int effectTime = 10;
         // 蓄力
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 4, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 2, 1);
         player.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE,
                 player.getEyeLocation().add(player.getEyeLocation().getDirection()), 120, 0, 0, 0);
         Location eyeLocation = player.getEyeLocation();
         // 释放
         new SimpleBukkitRunnable((o) -> {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 4 * 20, 1));
-            player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 4, 6);
-            new LineRangeAttack().releaseLineRangeAttack(eyeLocation, Particle.END_ROD, 0.6d, false, (currentLocation) -> {
+            player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 2, 6);
+            new LineRangeAttack().releaseLineRangeAttack(eyeLocation, Particle.END_ROD, 0.3d, false, (currentLocation) -> {
                 Location location = (Location) currentLocation;
-                player.spawnParticle(Particle.CLOUD, location, 10, 0, 0, 0, 2);
+                player.spawnParticle(Particle.DRAGON_BREATH, location, 10, 0, 0, 0, 2);
                 Collection<Entity> entities = player.getWorld().getNearbyEntities(location, 1, 1, 1);
                 for (Entity entity : entities) {
                     if (entity instanceof Player) continue;
@@ -39,7 +39,7 @@ public class PrecisionAttack extends Power {
                         LivingEntity livingEntity = (LivingEntity) entity;
                         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, effectTime * 20, 1));
                         // 取随机伤害值
-                        int damageHealth = Tools.random(30, Tools.damageMultipleConversion(120));
+                        int damageHealth = Tools.random(20, Tools.damageMultipleConversion(120));
                         // livingEntity.damage(damageHealth, player);
                         Tools.damageEntity(livingEntity, damageHealth, player);
                     }

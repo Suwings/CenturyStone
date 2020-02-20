@@ -29,7 +29,7 @@ public class AreaInvincible extends Power {
         final Location location = player.getEyeLocation().clone();
         HashMap<Player, Integer> playerHealthMap = new HashMap<>();
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, effectRange + 2, 2);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 6, 2);
         // 区域粒子效果
         Tools.spawnCircleParticle(location, Particle.CLOUD, radius, 10, effectTime * 2, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);

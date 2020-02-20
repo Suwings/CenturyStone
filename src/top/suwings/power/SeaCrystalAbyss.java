@@ -22,7 +22,7 @@ public class SeaCrystalAbyss extends Power {
         final int effectRange = (int) radius;
         final Location location = player.getEyeLocation().clone();
         // 播放声音
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, effectRange, 2);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 4, 2);
         // 释放粒子圆
         Tools.spawnCircleParticle(location, Particle.FLAME, radius, 20, effectTime, (Object self) -> {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);

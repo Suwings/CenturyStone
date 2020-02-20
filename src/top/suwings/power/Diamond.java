@@ -22,7 +22,7 @@ public class Diamond extends Power {
                 1000, 3, 3, 3
         );
         // 播放图腾使用声音
-        player.getWorld().playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 8, 2);
+        player.getWorld().playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 4, 2);
         this.addPlayerHealth(10);
         Tools.setPlayerPotionEffect(player, 60, PotionEffectType.SPEED);
         Tools.setPlayerPotionEffect(player, 30, PotionEffectType.SATURATION);

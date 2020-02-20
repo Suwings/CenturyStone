@@ -23,7 +23,7 @@ public class DamageAbsorption extends Power {
         final int effectRange = 8;
         final int effectTime = 60;
 
-        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, effectRange, 3);
+        player.getWorld().playSound(player.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 6, 3);
         player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, effectTime * 20, 4));
         List<Entity> nearEntity = player.getNearbyEntities(effectRange, effectRange, effectRange);
         for (Entity entity : nearEntity) {
