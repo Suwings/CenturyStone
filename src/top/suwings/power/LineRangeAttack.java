@@ -31,7 +31,7 @@ public class LineRangeAttack extends Power {
         final World playerWorld = player.getWorld();
         int effectTime = 2;
         // 释放直线范围攻击效果
-        this.releaseLineRangeAttack(player.getEyeLocation(), Particle.DRAGON_BREATH, 0.15, false, (currentLocation) -> {
+        this.releaseLineRangeAttack(player.getEyeLocation(), Particle.DRAGON_BREATH, 0.12, false, (currentLocation) -> {
             Location location = (Location) currentLocation;
             Collection<Entity> entities = playerWorld.getNearbyEntities(location, 1, 1, 1);
             for (Entity entity : entities) {

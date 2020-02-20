@@ -3,6 +3,6 @@ main: top.suwings.main.Main
 version: 1.0.0
 api-version: 1.14
 commands:
-  Hi:
-    description: centurystone
-    usage: /<command>
+  tpz:
+    description: To player location.
+    usage: /<command> <player>
