@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class AreaInvincible extends Power {
 
-    private final int CD_TIME = 36 * TICK;
+    private final int CD_TIME = 60 * TICK;
     private final int SPEND = 1;
     private final int DURABLE = 2;
 
@@ -35,16 +35,16 @@ public class AreaInvincible extends Power {
             Collection<Entity> nearEntity = location.getWorld().getNearbyEntities(location, effectRange, effectRange, effectRange);
             for (Entity entity : nearEntity) {
                 if (entity instanceof Player) {
-                    Player entityPlayer = (Player) entity;
-                    if (!entityPlayer.isDead() || entityPlayer.getHealth() > 0) {
-                        // 虽然是假的无敌，但是很厉害的无敌了
-                        if (playerHealthMap.get(entityPlayer) != null) {
-                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
-                        } else {
-                            playerHealthMap.put(entityPlayer, (int) entityPlayer.getHealth());
-                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
-                        }
-                    }
+//                    过于变态，现已删除
+//                    Player entityPlayer = (Player) entity;
+//                    if (!entityPlayer.isDead() || entityPlayer.getHealth() > 0) {
+//                        if (playerHealthMap.get(entityPlayer) != null) {
+//                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
+//                        } else {
+//                            playerHealthMap.put(entityPlayer, (int) entityPlayer.getHealth());
+//                            entityPlayer.setHealth(playerHealthMap.get(entityPlayer));
+//                        }
+//                    }
                     continue;
                 }
                 if (entity instanceof LivingEntity) {

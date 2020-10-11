@@ -22,7 +22,7 @@ public class Events implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             final ItemStack current = event.getItem();
             if (current != null) {
                 new StoneSkill().onStoneSkill(event.getPlayer(), current);

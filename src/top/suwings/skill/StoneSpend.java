@@ -1,5 +1,7 @@
 package top.suwings.skill;
 
+
+// 此类绝大部分常量已经不再使用
 public class StoneSpend {
     // 不同宝石的使用消耗
     // EMERALD 绿宝石

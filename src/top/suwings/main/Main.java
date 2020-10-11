@@ -29,8 +29,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("tpz"))//command获得的指令为Hi时输出“你们好”。
-        {
+        if (command.getName().equalsIgnoreCase("tpz")) {
             if (sender instanceof Player) {
                 if (args.length >= 1) {
                     final int USE_ONCE_SPEND = 2;

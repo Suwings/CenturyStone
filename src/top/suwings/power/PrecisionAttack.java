@@ -32,7 +32,7 @@ public class PrecisionAttack extends Power {
             new LineRangeAttack().releaseLineRangeAttack(eyeLocation, Particle.END_ROD, 0.3d, false, (currentLocation) -> {
                 Location location = (Location) currentLocation;
                 player.spawnParticle(Particle.DRAGON_BREATH, location, 10, 0, 0, 0, 2);
-                Collection<Entity> entities = player.getWorld().getNearbyEntities(location, 1, 1, 1);
+                Collection<Entity> entities = location.getWorld().getNearbyEntities(location, 1, 1, 1);
                 for (Entity entity : entities) {
                     if (entity instanceof Player) continue;
                     if (entity instanceof LivingEntity) {
